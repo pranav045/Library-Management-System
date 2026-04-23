@@ -2,6 +2,8 @@ package com.pranav.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Book {
@@ -12,6 +14,18 @@ public class Book {
 
 	public int getId() {
 		return id;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "author_id")
+	private Author author;
+
+	public Author getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Author author) {
+		this.author = author;
 	}
 
 	public void setId(int id) {
@@ -34,5 +48,3 @@ public class Book {
 		this.status = status;
 	}
 }
-
-
