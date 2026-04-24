@@ -1,8 +1,13 @@
 package com.pranav.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -20,11 +25,19 @@ public class Book {
 	@JoinColumn(name = "author_id")
 	private Author author;
 	@ManyToOne
-	@JoinColumn(name = "category_name")
-	private Category category;
-	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+	@ManyToMany
+	@JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private List<Category> categories = new ArrayList<>();
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
 
 	public User getUser() {
 		return user;
@@ -32,14 +45,6 @@ public class Book {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
 	}
 
 	public Author getAuthor() {
