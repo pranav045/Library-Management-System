@@ -19,6 +19,17 @@ public class Book {
 	@ManyToOne
 	@JoinColumn(name = "author_id")
 	private Author author;
+	@ManyToOne
+	@JoinColumn(name = "category_name")
+	private Category category;
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
 	public Author getAuthor() {
 		return author;
