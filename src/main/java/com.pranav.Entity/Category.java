@@ -5,12 +5,15 @@ import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Category {
 	@Id
 	private String name;
+
+	@ManyToMany(mappedBy = "categories")
+	private List<Book> books = new ArrayList<>();
 
 	public List<Book> getBooks() {
 		return books;
@@ -19,9 +22,6 @@ public class Category {
 	public void setBooks(List<Book> books) {
 		this.books = books;
 	}
-
-	@OneToMany(mappedBy = "category")
-	private List<Book> books = new ArrayList<>();
 
 	public String getName() {
 		return name;
