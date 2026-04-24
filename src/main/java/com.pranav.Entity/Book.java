@@ -22,6 +22,17 @@ public class Book {
 	@ManyToOne
 	@JoinColumn(name = "category_name")
 	private Category category;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public Category getCategory() {
 		return category;
