@@ -1,7 +1,11 @@
 package com.pranav.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -11,6 +15,16 @@ public class User {
 	private String name;
 	@OneToOne(mappedBy = "user")
 	private Profile profile;
+	@OneToMany(mappedBy = "user")
+	private List<Book> books = new ArrayList<Book>();
+
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
 
 	public Profile getProfile() {
 		return profile;
@@ -36,4 +50,3 @@ public class User {
 		this.name = name;
 	}
 }
-
