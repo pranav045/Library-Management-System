@@ -11,15 +11,15 @@ public class AuthorDAO {
 	@Autowired
 	private AuthorRepository authorRepository;
 
-	private Author saveAuthor(Author author) {
+	public Author saveAuthor(Author author) {
 		return authorRepository.save(author);
 	}
 
-	private Author findAuthor(int id) {
+	public Author findAuthor(int id) {
 		return authorRepository.findById(id).orElse(null);
 	}
 
-	private boolean deleteAuthor(int id) {
+	public boolean deleteAuthor(int id) {
 		if (authorRepository.existsById(id)) {
 			authorRepository.deleteById(id);
 			return true;
