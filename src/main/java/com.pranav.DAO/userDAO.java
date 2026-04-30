@@ -15,7 +15,7 @@ public class UserDAO {
 		return userRepository.save(user);
 	}
 
-	public User findById(int id) {
+	public User getUser(int id) {
 		return userRepository.findById(id).orElse(null);
 	}
 
