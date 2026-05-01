@@ -12,12 +12,21 @@ public class AuthorService {
 	@Autowired
 	private AuthorDAO authorDAO;
 
-	public ResponseEntity<ResponseStructure<Author>> saveUser(Author author) {
+	public ResponseEntity<ResponseStructure<Author>> saveAuthor(Author author) {
 		Author data = authorDAO.saveAuthor(author);
 		ResponseStructure<Author> rs = new ResponseStructure<Author>();
 		rs.setData(data);
-		rs.setMessage("Book Added Successfully");
+		rs.setMessage("Author Added Successfully");
 		rs.setStatusCode(HttpStatus.CREATED.value());
 		return new ResponseEntity<ResponseStructure<Author>>(rs, HttpStatus.CREATED);
+	}
+
+	public ResponseEntity<ResponseStructure<Author>> getAuthor(int id) {
+		Author data = authorDAO.findAuthor(id);
+		ResponseStructure<Author> rs = new ResponseStructure<Author>();
+		rs.setData(data);
+		rs.setMessage("Author Found Successfully");
+		rs.setStatusCode(HttpStatus.FOUND.value());
+		return new ResponseEntity<ResponseStructure<Author>>(rs, HttpStatus.FOUND);
 	}
 }
