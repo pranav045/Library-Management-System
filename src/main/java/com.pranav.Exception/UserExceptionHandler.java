@@ -1,0 +1,20 @@
+package com.pranav.Exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.pranav.DTO.ResponseStructure;
+
+@ControllerAdvice
+public class UserExceptionHandler {
+	@ExceptionHandler(IdDoesNotPresentException.class)
+	public ResponseEntity<ResponseStructure<String>> catchException(IdDoesNotPresentException exception) {
+		ResponseStructure<String> rs = new ResponseStructure<String>();
+		rs.setData(exception.getMessage());
+		rs.setStatusCode(HttpStatus.NOT_FOUND.value());
+		rs.setMessage("User not found");
+		return new ResponseEntity<ResponseStructure<String>>(rs, HttpStatus.NOT_FOUND);
+	}
+}
