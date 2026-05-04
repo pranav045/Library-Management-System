@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.pranav.DAO.BookDAO;
 import com.pranav.DTO.ResponseStructure;
 import com.pranav.Entity.Book;
+import com.pranav.Exception.IdDoesNotPresentException;
 
 @Service
 public class BookService {
@@ -25,10 +26,14 @@ public class BookService {
 
 	public ResponseEntity<ResponseStructure<Book>> getBook(int id) {
 		Book data = bookDAO.getBook(id);
-		ResponseStructure<Book> rs = new ResponseStructure<Book>();
-		rs.setData(data);
-		rs.setMessage("Book Found Successfully");
-		rs.setStatusCode(HttpStatus.FOUND.value());
-		return new ResponseEntity<ResponseStructure<Book>>(rs, HttpStatus.FOUND);
+		if (data != null) {
+			ResponseStructure<Book> rs = new ResponseStructure<Book>();
+			rs.setData(data);
+			rs.setMessage("Book Found Successfully");
+			rs.setStatusCode(HttpStatus.FOUND.value());
+			return new ResponseEntity<ResponseStructure<Book>>(rs, HttpStatus.FOUND);
+		} else {
+			throw new IdDoesNotPresentException("Id " + id + "does not present!");
+		}
 	}
 }
