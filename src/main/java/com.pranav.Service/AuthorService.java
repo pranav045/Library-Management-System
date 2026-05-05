@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import com.pranav.DAO.AuthorDAO;
 import com.pranav.DTO.ResponseStructure;
 import com.pranav.Entity.Author;
+import com.pranav.Exception.IdDoesNotPresentException;
 
 public class AuthorService {
 	@Autowired
@@ -23,10 +24,14 @@ public class AuthorService {
 
 	public ResponseEntity<ResponseStructure<Author>> getAuthor(int id) {
 		Author data = authorDAO.findAuthor(id);
-		ResponseStructure<Author> rs = new ResponseStructure<Author>();
-		rs.setData(data);
-		rs.setMessage("Author Found Successfully");
-		rs.setStatusCode(HttpStatus.FOUND.value());
-		return new ResponseEntity<ResponseStructure<Author>>(rs, HttpStatus.FOUND);
+		if (data != null) {
+			ResponseStructure<Author> rs = new ResponseStructure<Author>();
+			rs.setData(data);
+			rs.setMessage("Author Found Successfully");
+			rs.setStatusCode(HttpStatus.FOUND.value());
+			return new ResponseEntity<ResponseStructure<Author>>(rs, HttpStatus.FOUND);
+		} else {
+			throw new IdDoesNotPresentException("Id " + id + " does not found");
+		}
 	}
 }
