@@ -1,5 +1,7 @@
 package com.pranav.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import com.pranav.DAO.AuthorDAO;
 import com.pranav.DTO.ResponseStructure;
 import com.pranav.Entity.Author;
+import com.pranav.Exception.EmptyException;
 import com.pranav.Exception.IdDoesNotPresentException;
 
 public class AuthorService {
@@ -32,6 +35,19 @@ public class AuthorService {
 			return new ResponseEntity<ResponseStructure<Author>>(rs, HttpStatus.FOUND);
 		} else {
 			throw new IdDoesNotPresentException("Id " + id + " does not found");
+		}
+	}
+
+	public ResponseEntity<ResponseStructure<List<Author>>> findAllAuthor() {
+		List<Author> data = authorDAO.findAllAuthor();
+		if (data != null) {
+			ResponseStructure<List<Author>> rs = new ResponseStructure<List<Author>>();
+			rs.setData(data);
+			rs.setMessage("All Authors found successfully");
+			rs.setStatusCode(HttpStatus.FOUND.value());
+			return new ResponseEntity<ResponseStructure<List<Author>>>(rs, HttpStatus.FOUND);
+		} else {
+			throw new EmptyException("No authors found");
 		}
 	}
 }
