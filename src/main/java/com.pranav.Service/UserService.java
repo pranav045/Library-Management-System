@@ -33,7 +33,7 @@ public class UserService {
 			rs.setStatusCode(HttpStatus.FOUND.value());
 			return new ResponseEntity<ResponseStructure<User>>(rs, HttpStatus.FOUND);
 		} else {
-			throw new IdDoesNotPresentException("Id" + id + " doesA not found");
+			throw new IdDoesNotPresentException("Id" + id + " does not found");
 		}
 	}
 }
