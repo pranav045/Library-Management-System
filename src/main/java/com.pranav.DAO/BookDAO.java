@@ -1,5 +1,7 @@
 package com.pranav.DAO;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +20,9 @@ public class BookDAO {
 	public Book getBook(int id) {
 		return bookRepository.findById(id).orElse(null);
 	}
-
+	public List<Book> getAllBooks() {
+		return bookRepository.findAll();
+	}
 	public boolean deleteBook(int id) {
 		if (bookRepository.existsById(id)) {
 			bookRepository.deleteById(id);
