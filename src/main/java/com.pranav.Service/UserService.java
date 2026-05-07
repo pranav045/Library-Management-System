@@ -1,5 +1,7 @@
 package com.pranav.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.pranav.DAO.UserDAO;
 import com.pranav.DTO.ResponseStructure;
 import com.pranav.Entity.User;
+import com.pranav.Exception.EmptyException;
 import com.pranav.Exception.IdDoesNotPresentException;
 
 @Service
@@ -34,6 +37,19 @@ public class UserService {
 			return new ResponseEntity<ResponseStructure<User>>(rs, HttpStatus.FOUND);
 		} else {
 			throw new IdDoesNotPresentException("Id" + id + " does not found");
+		}
+	}
+
+	public ResponseEntity<ResponseStructure<List<User>>> getAllUsers() {
+		List<User> data = userDAO.getAllUsers();
+		if (data != null) {
+			ResponseStructure<List<User>> rs = new ResponseStructure<List<User>>();
+			rs.setData(data);
+			rs.setMessage("Book Found Successfully");
+			rs.setStatusCode(HttpStatus.FOUND.value());
+			return new ResponseEntity<ResponseStructure<List<User>>>(rs, HttpStatus.FOUND);
+		} else {
+			throw new EmptyException("No users found");
 		}
 	}
 }
