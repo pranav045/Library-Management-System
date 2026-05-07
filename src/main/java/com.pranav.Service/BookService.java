@@ -1,5 +1,7 @@
 package com.pranav.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.pranav.DAO.BookDAO;
 import com.pranav.DTO.ResponseStructure;
 import com.pranav.Entity.Book;
+import com.pranav.Exception.EmptyException;
 import com.pranav.Exception.IdDoesNotPresentException;
 
 @Service
@@ -34,6 +37,19 @@ public class BookService {
 			return new ResponseEntity<ResponseStructure<Book>>(rs, HttpStatus.FOUND);
 		} else {
 			throw new IdDoesNotPresentException("Id " + id + "does not present!");
+		}
+	}
+
+	public ResponseEntity<ResponseStructure<List<Book>>> getAllBooks() {
+		List<Book> data = bookDAO.getAllBooks();
+		if (data != null) {
+			ResponseStructure<List<Book>> rs = new ResponseStructure<List<Book>>();
+			rs.setData(data);
+			rs.setMessage("Books found successfully");
+			rs.setStatusCode(HttpStatus.FOUND.value());
+			return new ResponseEntity<ResponseStructure<List<Book>>>(rs, HttpStatus.FOUND);
+		} else {
+			throw new EmptyException("No books found");
 		}
 	}
 }
