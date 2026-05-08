@@ -1,53 +1,36 @@
-package com.pranav.Service;
+package com.pranav.Controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.pranav.DAO.AuthorDAO;
 import com.pranav.DTO.ResponseStructure;
 import com.pranav.Entity.Author;
-import com.pranav.Exception.EmptyException;
-import com.pranav.Exception.IdDoesNotPresentException;
+import com.pranav.Service.AuthorService;
 
-public class AuthorService {
+@RestController
+public class AuthorController {
 	@Autowired
-	private AuthorDAO authorDAO;
+	private AuthorService authorService;
 
-	public ResponseEntity<ResponseStructure<Author>> saveAuthor(Author author) {
-		Author data = authorDAO.saveAuthor(author);
-		ResponseStructure<Author> rs = new ResponseStructure<Author>();
-		rs.setData(data);
-		rs.setMessage("Author Added Successfully");
-		rs.setStatusCode(HttpStatus.CREATED.value());
-		return new ResponseEntity<ResponseStructure<Author>>(rs, HttpStatus.CREATED);
+	@PostMapping("/saveAuthor")
+	public ResponseEntity<ResponseStructure<Author>> saveAuthor(@RequestBody Author author) {
+		return authorService.saveAuthor(author);
 	}
 
-	public ResponseEntity<ResponseStructure<Author>> getAuthor(int id) {
-		Author data = authorDAO.findAuthor(id);
-		if (data != null) {
-			ResponseStructure<Author> rs = new ResponseStructure<Author>();
-			rs.setData(data);
-			rs.setMessage("Author Found Successfully");
-			rs.setStatusCode(HttpStatus.FOUND.value());
-			return new ResponseEntity<ResponseStructure<Author>>(rs, HttpStatus.FOUND);
-		} else {
-			throw new IdDoesNotPresentException("Id " + id + " does not found");
-		}
+	@GetMapping("/getAuthor/{id}")
+	public ResponseEntity<ResponseStructure<Author>> getAuthor(@PathVariable int id) {
+		return authorService.getAuthor(id);
 	}
 
-	public ResponseEntity<ResponseStructure<List<Author>>> findAllAuthor() {
-		List<Author> data = authorDAO.findAllAuthor();
-		if (data != null) {
-			ResponseStructure<List<Author>> rs = new ResponseStructure<List<Author>>();
-			rs.setData(data);
-			rs.setMessage("All Authors found successfully");
-			rs.setStatusCode(HttpStatus.FOUND.value());
-			return new ResponseEntity<ResponseStructure<List<Author>>>(rs, HttpStatus.FOUND);
-		} else {
-			throw new EmptyException("No authors found");
-		}
+	@GetMapping("/getAuthors")
+	public ResponseEntity<ResponseStructure<List<Author>>> getAuthors() {
+		return authorService.findAllAuthor();
 	}
 }
