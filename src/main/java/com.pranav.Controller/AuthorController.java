@@ -1,5 +1,7 @@
 package com.pranav.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +25,12 @@ public class AuthorController {
 	}
 
 	@GetMapping("/getAuthor/{id}")
-	public ResponseEntity<ResponseStructure<Author>> getAppointment(@PathVariable int id) {
+	public ResponseEntity<ResponseStructure<Author>> getAuthor(@PathVariable int id) {
 		return authorService.getAuthor(id);
+	}
+
+	@GetMapping("/getAuthors")
+	public ResponseEntity<ResponseStructure<List<Author>>> getAuthors() {
+		return authorService.findAllAuthor();
 	}
 }
