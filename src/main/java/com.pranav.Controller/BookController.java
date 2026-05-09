@@ -1,5 +1,7 @@
 package com.pranav.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,5 +27,10 @@ public class BookController {
 	@GetMapping("/getAuthor/{id}")
 	public ResponseEntity<ResponseStructure<Book>> getBook(@PathVariable int id) {
 		return bookService.getBook(id);
+	}
+
+	@GetMapping("/getAllAuthors")
+	public ResponseEntity<ResponseStructure<List<Book>>> getAllAuthors() {
+		return bookService.getAllBooks();
 	}
 }
