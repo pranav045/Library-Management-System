@@ -1,5 +1,7 @@
 package com.pranav.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,5 +27,10 @@ public class UserController {
 	@GetMapping("/getUser/{id}")
 	public ResponseEntity<ResponseStructure<User>> getUser(@PathVariable int id) {
 		return userService.getUser(id);
+	}
+
+	@GetMapping("/getAllUsers")
+	public ResponseEntity<ResponseStructure<List<User>>> getAllUsers() {
+		return userService.getAllUsers();
 	}
 }
