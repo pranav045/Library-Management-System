@@ -1,5 +1,7 @@
 package com.pranav.DAO;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +19,10 @@ public class AuthorDAO {
 
 	public Author findAuthor(int id) {
 		return authorRepository.findById(id).orElse(null);
+	}
+
+	public List<Author> findAllAuthor() {
+		return authorRepository.findAll();
 	}
 
 	public boolean deleteAuthor(int id) {
