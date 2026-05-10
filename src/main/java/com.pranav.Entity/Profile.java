@@ -1,22 +1,30 @@
 package com.pranav.Entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
 public class Profile {
+
+	@Id
+	private int id;
+
 	private String address;
 	private String email;
 	private String phone;
-	@OneToOne(mappedBy = "profile")
+
+	@OneToOne
+	@JoinColumn(name = "user_id")
 	private User user;
 
-	public User getUser() {
-		return user;
+	public int getId() {
+		return id;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getAddress() {
@@ -43,5 +51,11 @@ public class Profile {
 		this.phone = phone;
 	}
 
-}
+	public User getUser() {
+		return user;
+	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}
+}
