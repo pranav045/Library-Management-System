@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import com.pranav.DAO.AuthorDAO;
 import com.pranav.DTO.ResponseStructure;
@@ -12,6 +13,7 @@ import com.pranav.Entity.Author;
 import com.pranav.Exception.EmptyException;
 import com.pranav.Exception.IdDoesNotPresentException;
 
+@Service
 public class AuthorService {
 	@Autowired
 	private AuthorDAO authorDAO;
@@ -48,6 +50,20 @@ public class AuthorService {
 			return new ResponseEntity<ResponseStructure<List<Author>>>(rs, HttpStatus.FOUND);
 		} else {
 			throw new EmptyException("No authors found");
+		}
+	}
+
+	public ResponseEntity<ResponseStructure<Author>> deleteUser(int id) {
+		Author data = authorDAO.findAuthor(id);
+		if (data != null) {
+			ResponseStructure<Author> rs = new ResponseStructure<Author>();
+			authorDAO.deleteAuthor(id);
+			rs.setData(null);
+			rs.setMessage("Author having id" + id + " deleted successfully");
+			rs.setStatusCode(HttpStatus.FOUND.value());
+			return new ResponseEntity<ResponseStructure<Author>>(rs, HttpStatus.FOUND);
+		} else {
+			throw new IdDoesNotPresentException("Id" + id + " does not found");
 		}
 	}
 }
