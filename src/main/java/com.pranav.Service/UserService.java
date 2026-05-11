@@ -22,7 +22,7 @@ public class UserService {
 		User data = userDAO.saveUser(user);
 		ResponseStructure<User> rs = new ResponseStructure<User>();
 		rs.setData(data);
-		rs.setMessage("Book Added Successfully");
+		rs.setMessage("User Added Successfully");
 		rs.setStatusCode(HttpStatus.CREATED.value());
 		return new ResponseEntity<ResponseStructure<User>>(rs, HttpStatus.CREATED);
 	}
@@ -50,6 +50,20 @@ public class UserService {
 			return new ResponseEntity<ResponseStructure<List<User>>>(rs, HttpStatus.FOUND);
 		} else {
 			throw new EmptyException("No users found");
+		}
+	}
+
+	public ResponseEntity<ResponseStructure<User>> deleteUser(int id) {
+		User data = userDAO.getUser(id);
+		if (data != null) {
+			ResponseStructure<User> rs = new ResponseStructure<User>();
+			userDAO.deleteUser(id);
+			rs.setData(null);
+			rs.setMessage("User having id" + id + " deleted successfully");
+			rs.setStatusCode(HttpStatus.FOUND.value());
+			return new ResponseEntity<ResponseStructure<User>>(rs, HttpStatus.FOUND);
+		} else {
+			throw new IdDoesNotPresentException("Id" + id + " does not found");
 		}
 	}
 }
