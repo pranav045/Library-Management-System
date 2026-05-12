@@ -24,13 +24,12 @@ public class BookController {
 		return bookService.saveBook(book);
 	}
 
-	@GetMapping("/getAuthor/{id}")
-	
+	@GetMapping("/getBook/{id}")
 	public ResponseEntity<ResponseStructure<Book>> getBook(@PathVariable int id) {
 		return bookService.getBook(id);
 	}
 
-	@GetMapping("/getAllAuthors")
+	@GetMapping("/getAllBooks")
 	public ResponseEntity<ResponseStructure<List<Book>>> getAllAuthors() {
 		return bookService.getAllBooks();
 	}
