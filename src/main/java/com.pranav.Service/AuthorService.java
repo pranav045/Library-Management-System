@@ -53,7 +53,7 @@ public class AuthorService {
 		}
 	}
 
-	public ResponseEntity<ResponseStructure<Author>> deleteUser(int id) {
+	public ResponseEntity<ResponseStructure<Author>> deleteAuthor(int id) {
 		Author data = authorDAO.findAuthor(id);
 		if (data != null) {
 			ResponseStructure<Author> rs = new ResponseStructure<Author>();
