@@ -9,8 +9,7 @@ export default function AppShell() {
         <div className="brand">
           <div className="brandMark">LMS</div>
           <div className="brandText">
-            <div className="brandTitle">Library Management</div>
-            <div className="brandSub">Spring Boot + React</div>
+            <div className="brandTitle">Library Management System</div>
           </div>
         </div>
 
