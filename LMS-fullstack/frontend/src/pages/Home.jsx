@@ -142,41 +142,7 @@ export default function Home() {
           </div>
         </Card>
 
-        <Card 
-          title="System Status" 
-          subtitle="Integration health"
-          style={{ animationDelay: '0.3s' }}
-        >
-          <div className="stack" style={{ gap: '16px' }}>
-            <div className="statItem" style={{ background: 'rgba(34, 197, 94, 0.05)', borderColor: 'rgba(34, 197, 94, 0.1)' }}>
-              <div className="row" style={{ justifyContent: 'space-between' }}>
-                <div className="row" style={{ gap: '10px' }}>
-                  <Database size={18} style={{ color: '#22c55e' }} />
-                  <span className="pageSub" style={{ color: 'var(--text-main)' }}>Backend Connection</span>
-                </div>
-                <div style={{ padding: '4px 8px', background: '#22c55e20', color: '#22c55e', borderRadius: '6px', fontSize: '10px', fontWeight: 800 }}>ACTIVE</div>
-              </div>
-            </div>
-            <div className="statItem" style={{ background: 'rgba(59, 130, 246, 0.05)', borderColor: 'rgba(59, 130, 246, 0.1)' }}>
-              <div className="row" style={{ justifyContent: 'space-between' }}>
-                <div className="row" style={{ gap: '10px' }}>
-                  <ShieldCheck size={18} style={{ color: 'var(--primary)' }} />
-                  <span className="pageSub" style={{ color: 'var(--text-main)' }}>Security Profile</span>
-                </div>
-                <div style={{ padding: '4px 8px', background: 'var(--primary-glow)', color: 'var(--primary)', borderRadius: '6px', fontSize: '10px', fontWeight: 800 }}>SECURE</div>
-              </div>
-            </div>
-            <div className="statItem" style={{ background: 'rgba(168, 85, 247, 0.05)', borderColor: 'rgba(168, 85, 247, 0.1)' }}>
-              <div className="row" style={{ justifyContent: 'space-between' }}>
-                <div className="row" style={{ gap: '10px' }}>
-                  <Cpu size={18} style={{ color: 'var(--secondary)' }} />
-                  <span className="pageSub" style={{ color: 'var(--text-main)' }}>System Core</span>
-                </div>
-                <span className="pageSub" style={{ margin: 0, fontWeight: 700 }}>v2.0.0</span>
-              </div>
-            </div>
-          </div>
-        </Card>
+        
       </div>
     </div>
   )
