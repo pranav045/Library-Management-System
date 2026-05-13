@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, Link } from 'react-router-dom'
+import { Users, BookOpen, UserCheck, LayoutGrid, Library } from 'lucide-react'
 
 const linkClass = ({ isActive }) => `navLink${isActive ? ' navLinkActive' : ''}`
 
@@ -6,25 +7,40 @@ export default function AppShell() {
   return (
     <div className="appShell">
       <header className="topBar">
-        <div className="brand">
-          <div className="brandMark">LMS</div>
-          <div className="brandText">
-            <div className="brandTitle">Library Management System</div>
+        <Link to="/" className="brand">
+          <div className="brandMark">
+            <Library size={24} />
           </div>
-        </div>
+          <div className="brandText">
+            <div className="brandTitle">LMS</div>
+            <div className="brandSub">Admin Dashboard</div>
+          </div>
+        </Link>
 
         <nav className="nav">
           <NavLink className={linkClass} to="/users">
-            Users
+            <div className="row" style={{ gap: '6px' }}>
+              <Users size={18} />
+              <span>Users</span>
+            </div>
           </NavLink>
           <NavLink className={linkClass} to="/authors">
-            Authors
+            <div className="row" style={{ gap: '6px' }}>
+              <UserCheck size={18} />
+              <span>Authors</span>
+            </div>
           </NavLink>
           <NavLink className={linkClass} to="/books">
-            Books
+            <div className="row" style={{ gap: '6px' }}>
+              <BookOpen size={18} />
+              <span>Books</span>
+            </div>
           </NavLink>
           <NavLink className={linkClass} to="/categories">
-            Categories
+            <div className="row" style={{ gap: '6px' }}>
+              <LayoutGrid size={18} />
+              <span>Categories</span>
+            </div>
           </NavLink>
         </nav>
       </header>

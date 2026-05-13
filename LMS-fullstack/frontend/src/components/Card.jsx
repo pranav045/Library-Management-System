@@ -1,6 +1,6 @@
-export default function Card({ title, subtitle, right, children }) {
+export default function Card({ title, subtitle, right, children, style }) {
   return (
-    <section className="card">
+    <div className="card" style={style}>
       {(title || subtitle || right) && (
         <div className="cardHeader">
           <div>
@@ -11,7 +11,7 @@ export default function Card({ title, subtitle, right, children }) {
         </div>
       )}
       <div className="cardBody">{children}</div>
-    </section>
+    </div>
   )
 }
 
