@@ -16,6 +16,8 @@ import Toast from '../components/Toast.jsx'
 import { createBook, deleteBook, getAllBooks } from '../services/bookService.js'
 import { getAllAuthors } from '../services/authorService.js'
 import { getAllCategories } from '../services/categoryService.js'
+import { getAllUsers } from '../services/userService.js'
+
 
 function unwrap(structured) {
   return structured?.data ?? structured
@@ -25,10 +27,13 @@ export default function Books() {
   const [rows, setRows] = useState([])
   const [authors, setAuthors] = useState([])
   const [categories, setCategories] = useState([])
+  const [users, setUsers] = useState([])
+
   const [loading, setLoading] = useState(true)
   const [toast, setToast] = useState(null)
   const [q, setQ] = useState('')
-  const [form, setForm] = useState({ id: '', name: '', status: '', authorId: '', categoryName: '' })
+  const [form, setForm] = useState({ id: '', name: '', status: '', authorId: '', categoryName: '', userId: '' })
+
   const [editingId, setEditingId] = useState(null)
 
   const filtered = useMemo(() => {
@@ -43,15 +48,18 @@ export default function Books() {
   async function loadData() {
     setLoading(true)
     try {
-      const [resB, resA, resC] = await Promise.all([
+      const [resB, resA, resC, resU] = await Promise.all([
         getAllBooks(),
         getAllAuthors(),
-        getAllCategories().catch(() => ({ data: [] }))
+        getAllCategories().catch(() => ({ data: [] })),
+        getAllUsers().catch(() => ({ data: [] }))
       ])
       
       setRows(Array.isArray(unwrap(resB)) ? unwrap(resB) : [])
       setAuthors(Array.isArray(unwrap(resA)) ? unwrap(resA) : [])
       setCategories(Array.isArray(unwrap(resC)) ? unwrap(resC) : [])
+      setUsers(Array.isArray(unwrap(resU)) ? unwrap(resU) : [])
+
     } catch (e) {
       const msg = e?.response?.data?.message ?? e?.message ?? 'Network error'
       setToast({ type: 'error', title: 'Failed to load data', message: String(msg) })
@@ -78,12 +86,15 @@ export default function Books() {
       name,
       status: form.status.trim() || 'Available',
       author: form.authorId ? { id: Number(form.authorId) } : null,
+      user: form.userId ? { id: Number(form.userId) } : null,
       categories: form.categoryName ? [{ name: form.categoryName }] : []
     }
 
+
     try {
       await createBook(payload)
-      setForm({ id: '', name: '', status: '', authorId: '', categoryName: '' })
+      setForm({ id: '', name: '', status: '', authorId: '', categoryName: '', userId: '' })
+
       setEditingId(null)
       setToast({ type: 'success', title: editingId ? 'Book updated' : 'Book created' })
       await loadData()
@@ -110,8 +121,10 @@ export default function Books() {
       name: book.name ?? '',
       status: book.status ?? '',
       authorId: book.author?.id ? String(book.author.id) : '',
+      userId: book.user?.id ? String(book.user.id) : '',
       categoryName: book.categories?.[0]?.name ?? ''
     })
+
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -171,7 +184,7 @@ export default function Books() {
             </label>
           </div>
           
-          <div className="formRow" style={{ gridTemplateColumns: '1fr 1fr auto' }}>
+          <div className="formRow" style={{ gridTemplateColumns: '1fr 1fr 1fr auto' }}>
             <label className="field">
               <span>Author</span>
               <select
@@ -196,15 +209,29 @@ export default function Books() {
                 {categories.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
               </select>
             </label>
+            <label className="field">
+              <span>Assigned User</span>
+              <select
+                value={form.userId}
+                onChange={(e) => setForm((f) => ({ ...f, userId: e.target.value }))}
+                className="search"
+                style={{ width: '100%', background: 'rgba(2, 6, 23, 0.55)', color: '#e2e8f0' }}
+              >
+                <option value="">Not Assigned</option>
+                {users.map(u => <option key={u.id} value={u.id}>{u.name}</option>)}
+              </select>
+            </label>
             <div className="field">
+
               <span>&nbsp;</span>
               <div className="row">
                 <button className="btnPrimary" type="submit">
                   {editingId ? <><Edit2 size={16} /> Update</> : <><Plus size={16} /> Create Book</>}
                 </button>
                 {editingId && (
-                  <button className="btnGhost" type="button" onClick={() => { setEditingId(null); setForm({ id: '', name: '', status: '', authorId: '', categoryName: '' }) }}>
+                  <button className="btnGhost" type="button" onClick={() => { setEditingId(null); setForm({ id: '', name: '', status: '', authorId: '', categoryName: '', userId: '' }) }}>
                     <X size={16} /> Cancel
+
                   </button>
                 )}
               </div>
@@ -246,21 +273,25 @@ export default function Books() {
           </div>
         ) : (
           <div className="table">
-            <div className="tr th" style={{ gridTemplateColumns: '80px 1.5fr 1fr 1fr 1fr auto' }}>
+            <div className="tr th" style={{ gridTemplateColumns: '80px 1.2fr 1fr 1fr 1fr 1fr auto' }}>
               <div>ID</div>
               <div>Title</div>
               <div>Author</div>
               <div>Category</div>
+              <div>User</div>
               <div>Status</div>
               <div className="right">Actions</div>
             </div>
+
             {filtered.map((b) => (
-              <div className="tr" key={b.id} style={{ gridTemplateColumns: '80px 1.5fr 1fr 1fr 1fr auto' }}>
+              <div className="tr" key={b.id} style={{ gridTemplateColumns: '80px 1.2fr 1fr 1fr 1fr 1fr auto' }}>
                 <div className="muted" style={{ fontFamily: 'var(--font-display)', fontWeight: 600 }}>#{b.id}</div>
                 <div style={{ fontWeight: '600', color: 'var(--text-main)' }}>{b.name}</div>
                 <div className="muted">{b.author?.name ?? '—'}</div>
                 <div>{b.categories?.map(c => c.name).join(', ') || 'Uncategorized'}</div>
+                <div className="muted">{b.user?.name ?? '—'}</div>
                 <div>
+
                    <div className="row" style={{ 
                      padding: '4px 10px', 
                      borderRadius: '8px', 

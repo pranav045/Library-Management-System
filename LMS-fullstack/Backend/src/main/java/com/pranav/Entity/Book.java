@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-@JsonIgnoreProperties({ "user", "author", "categories" })
+@JsonIgnoreProperties({})
 public class Book {
 
 	@Id
@@ -31,7 +31,7 @@ public class Book {
 	private User user;
 
 	@ManyToMany
-	@JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "category_name", referencedColumnName = "name"))
+	@JoinTable(name = "book_categories", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "category_name"))
 	private List<Category> categories = new ArrayList<>();
 
 	// Default Constructor
