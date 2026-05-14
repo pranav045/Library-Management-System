@@ -35,4 +35,16 @@ This project demonstrates **CRUD operations**, **state management**, and a clean
 - **Repository** → JPA repositories for persistence  
 
 ### Frontend (React + Vite)
+# 📂 Project Structure (Frontend)
+
+| Folder/File        | Description                                      |
+|--------------------|--------------------------------------------------|
+| **src/**           | Main source code directory                       |
+| ├── **components/**| Reusable UI components (BookList, SearchBar, etc.) |
+| ├── **pages/**     | Page-level views (Users, Books, Authors)         |
+| ├── **services/**  | API integration layer (axios for backend calls)  |
+| ├── **App.jsx**    | Root component with routing                      |
+| └── **index.js**   | Entry point for React app                        |
+| **public/**        | Static assets (favicon, index.html, images)      |
+| **package.json**   | Project dependencies & npm scripts               |
 
