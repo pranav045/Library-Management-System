@@ -48,3 +48,28 @@ This project demonstrates **CRUD operations**, **state management**, and a clean
 | **public/**        | Static assets (favicon, index.html, images)      |
 | **package.json**   | Project dependencies & npm scripts               |
 
+
+---
+
+## ⚙️ Tech Stack
+- **React (Vite)** → Fast frontend framework  
+- **Axios** → API requests to backend  
+- **React Router DOM** → Routing between pages  
+- **Lucide React** → Icons for UI  
+- **Vanilla CSS** → Modern design with gradients, animations, and glassmorphism  
+
+---
+
+## 🚀 Features
+- **Users Page** → Add, list, and delete users  
+- **Books Page** → Add, list, search, borrow, and return books  
+- **Authors Page** → Add, list, and delete authors  
+- **Responsive UI** → Works across desktop and mobile  
+
+---
+
+## ▶️ How to Run
+
+1. Navigate to the frontend folder:
+   ```bash
+   cd frontend
